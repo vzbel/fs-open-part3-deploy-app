@@ -59,6 +59,9 @@ let notes = [
 const cors = require("cors");
 app.use(cors());
 
+// serve static assets
+app.use(express.static("dist"));
+
 // JSON parsing middleware
 app.use(express.json());
 
