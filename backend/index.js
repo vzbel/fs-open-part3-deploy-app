@@ -55,9 +55,6 @@ let notes = [
   },
 ];
 
-// allow js on browsers to read the response
-const cors = require("cors");
-app.use(cors());
 
 // serve static assets
 app.use(express.static("dist"));
