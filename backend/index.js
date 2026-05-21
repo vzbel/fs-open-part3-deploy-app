@@ -32,29 +32,30 @@
 // ---- HTTP version End ----
 
 // --- Express version Start ---
+require("dotenv").config();
 const express = require("express");
+const Note = require("./models/note.js");
 
 // Create server
 const app = express();
 
-let notes = [
-  {
-    id: "1",
-    content: "HTML is easy",
-    important: true,
-  },
-  {
-    id: "2",
-    content: "Browser can execute only JavaScript",
-    important: false,
-  },
-  {
-    id: "3",
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true,
-  },
-];
-
+// let notes = [
+//   {
+//     id: "1",
+//     content: "HTML is easy",
+//     important: true,
+//   },
+//   {
+//     id: "2",
+//     content: "Browser can execute only JavaScript",
+//     important: false,
+//   },
+//   {
+//     id: "3",
+//     content: "GET and POST are the most important methods of HTTP protocol",
+//     important: true,
+//   },
+// ];
 
 // serve static assets
 app.use(express.static("dist"));
@@ -98,7 +99,9 @@ app.delete("/api/notes/:id", (request, response) => {
 
 // Notes endpoint
 app.get("/api/notes", (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 // Make a string for the next untaken id
@@ -134,7 +137,7 @@ const unkownEndpoint = (request, response) => {
 app.use(unkownEndpoint);
 
 // Listen
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
