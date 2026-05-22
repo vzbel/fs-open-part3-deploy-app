@@ -12,3 +12,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3001/people
+
+###
+GET http://localhost:3001/api/notes/6a0e48a771e2ba848d24d637
