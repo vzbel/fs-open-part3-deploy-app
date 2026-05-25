@@ -96,7 +96,7 @@ app.get("/api/notes/:id", (request, response, next) => {
 // Delete note with the given id
 app.delete("/api/notes/:id", (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
-    .then((result) => {
+    .then(() => {
       response.status(204).end();
     })
     .catch((error) => {
@@ -112,11 +112,11 @@ app.get("/api/notes", (request, response) => {
 });
 
 // Make a string for the next untaken id
-const generateId = () => {
-  const maxId =
-    notes.length > 0 ? Math.max(...notes.map((n) => Number(n.id))) : 0;
-  return String(maxId + 1);
-};
+// const generateId = () => {
+//   const maxId =
+//     notes.length > 0 ? Math.max(...notes.map((n) => Number(n.id))) : 0;
+//   return String(maxId + 1);
+// };
 
 // Create new note
 app.post("/api/notes", (request, response, next) => {
@@ -130,7 +130,7 @@ app.post("/api/notes", (request, response, next) => {
   note.save().then((savedNote) => {
     response.json(savedNote);
   }).catch((error) => {
-    next(error)
+    next(error);
   });
 });
 

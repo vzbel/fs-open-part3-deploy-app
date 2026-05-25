@@ -19,20 +19,20 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model("Note", noteSchema);
 
 // make an example note and save it to db
-// const note = new Note({
-//   content: "Mongoose makes things easy",
-//   important: true,
-// });
-// note.save().then((result) => {
-//   console.log("note saved!");
-//   mongoose.connection.close();
-// });
+const note = new Note({
+  content: "Mongoose makes things easy",
+  important: true,
+});
+note.save().then(() => {
+  console.log("note saved!");
+  mongoose.connection.close();
+});
 
 // print all notes from db
-// Note.find({ important: false }).then((result) => {
-//   result.forEach(note => {
-//     console.log(note);
-//   });
+Note.find({ important: false }).then((result) => {
+  result.forEach(note => {
+    console.log(note);
+  });
 
-//   mongoose.connection.close();
-// });
+  mongoose.connection.close();
+});
