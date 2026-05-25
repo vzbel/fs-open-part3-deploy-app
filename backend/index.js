@@ -119,11 +119,8 @@ const generateId = () => {
 };
 
 // Create new note
-app.post("/api/notes", (request, response) => {
+app.post("/api/notes", (request, response, next) => {
   const body = request.body;
-  if (!body.content) {
-    return response.status(400).json({ error: "content missing" });
-  }
 
   const note = new Note({
     content: body.content,
@@ -132,6 +129,8 @@ app.post("/api/notes", (request, response) => {
 
   note.save().then((savedNote) => {
     response.json(savedNote);
+  }).catch((error) => {
+    next(error)
   });
 });
 
@@ -176,6 +175,8 @@ const errorHandler = (error, request, response, next) => {
   // bad id
   if (error.name === "CastError") {
     return response.status(500).send({ error: "malformatted id" });
+  }else if(error.name === "ValidationError"){
+    return response.status(400).json({ error: error.message });
   }
 
   // it's some other error we can just let express handle
